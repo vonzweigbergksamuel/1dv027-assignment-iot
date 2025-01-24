@@ -1,32 +1,70 @@
 # Assignment - Internet of Things
 
-Hardware and sensors are constantly added to our lives. Sensors produce data, data that often need to be collected and analyzed. Having a basic knowledge of IoT protocols opens many doors for exciting projects as a web developer. This assignment aims to create a thing that connects to the web, a Web Thing.
-IOT 2023
+Hardware and sensors are constantly added to our lives. Sensors produce data that often needs to be collected and analyzed. Having a basic knowledge of IoT protocols opens many doors for exciting projects as a web developer. 
+
+This assignment focuses on analyzing IoT data and visualizing it on a web-based dashboard using a cloud platform. It aims to enhance your understanding of IoT data, API integration, and web-based data visualization.
 
 ## Description
 
-Build a thing that connects to the internet, either independently or through a gateway. The function and if it should have actions, properties, or both are up to you and your project. Create a web interface for your thing. Do you collect a lot of data? Why not show it on a chart?
+You will receive data from Temp and Humidity, and Total Volatile Organic Compounds Sensor (TVOC) connected via WiFi gateway to MQTT broker. You need to subscribe to the MQTT broker. Create a web interface for this data and visualize it on a chart.
 
-Looking for inspiration? Please have a look at [some of our example projects](https://coursepress.lnu.se/kurser/webben-som-applikationsplattform/iot/exempel)
+You can set up open-source tools to make collection, storage, and graphing such as The TIG (Telegraf, Influx, and Grafana) Stack, or explore alternative tools and methods that align with your interests and expertise.
 
-## Requirements
+## Assignment Tasks
 
-The requirements for the assignment are quite straightforward. But, they can be discussed if they are stopping you from achieving your goals.
+1. **Subscribe to the provided MQTT broker** to receive real-time data from a Temp and Humidity, and TVOC sensor.
 
-### Must
+    MQTT broker details: 
+   - mqtt://cscloud7-148.lnu.se:1883
+   - user: iotlab
+   - pass: iotlab
+   - topic: as of now 'data/sht30' which holds temperature and humidity. Considering adding TVOC from another sensor aswell on a different topic.
+    format: json
 
-* The Raspberry Pi Pico W microcontroller is connected to WiFi.
-* The Raspberry Pi Pico W microcontroller reads the temperature and humidity data of sensor DHT11.
-* The Raspberry Pi Pico W microcontroller sends the temperature and humidity data to the Adafruit MQTT Broker using the MQTT protocol. The data need to be prepared in a JSON format.
-* The Raspberry Pi Pico W microcontroller must be controlled by a button on the Adafruit dashboard i.e. if Rpi Pico W receives the command "ON" or "OFF" on the "LED" topic, the built-in LED of Rpi Pico W must be on or off.
-* Your git repository should include the assignment report, assignment code, and link to your prerecorded presentation file where you show your hardware (picow+wires+sensor) connection, visualization of data in your dashboard, and turn on/off the PicoW LED (MP4 file). 
-* It would be a bonus if you can set up your own MQTT server rather than using Adafruit MQTT Broker.
+2. **Analyze the incoming data**, which includes:
+    - Temp and Humidity
+    - TVOC levels
+    - Timestamp of each reading
 
-## Assignment Report
+3. **Choose Your Toolset:**
+    You can pick one of the following approaches to process, store, and visualize the data.
 
-Your application will be presented using a "Tutorial style" assignment report. For details, see the included [template](./Template.md). It is recommended that you replace this README.md with your final report, but you are free to place the report wherever you want as long as it is linked in the Merge Request.
+    ### Option 1: Telegraf + InfluxDB + Grafana (TIG Stack)
+    - **Telegraf**: Configure Telegraf to subscribe to the MQTT topic and collect data from the broker.
+    - **InfluxDB**: Store the incoming sensor data in InfluxDB, a time-series database.
+    - **Grafana**: Create a professional-grade dashboard in Grafana to visualize the CO2 and TVOC levels. Use features like real-time charts, dynamic thresholds, and historical data exploration.
+
+
+    ### Option 2: Node.js + MongoDB + Frontend framework
+    - **MongoDB**: Use MongoDB to store sensor data. Explore and pick a strategy to optimize mongo for time-series data. 
+    - **Node.js**: Employ Node.js with MQTT.js to subscribe to the MQTT broker and process data into MongoDB.
+    - **React.js/Next.js/Angular etc**: Design a custom web interface with dynamic features like filtering and real-time updates.
+    - **Chart.js/D3.js**: Visualize data using Chart.js or D3.js for interactive charts and graphs.
+        
+## Deliverables
+
+1. **Functional Dashboard:**
+    - A url to a dashboard built using the selected toolset.
+
+2. **Configuration Files:**
+    - For TIG Stack: Provide the Telegraf configuration file, InfluxDB setup details, and Grafana dashboard export file.
+    - Provide the MongoDB schema or collection structure for storing sensor data.
+    - Share any necessary backend configuration files or scripts for connecting to MongoDB and processing data.
+    
+3. **Documentation:**
+    - Explain the setup process for your selected tool.
+    - Describe how data flows from the MQTT broker to your dashboard. 
+    - Describe the optimizations implemented for handling time-series data
 
 ## Merge Request
-
 You hand in the assignment by making a Merge Request of your project against the lnu/submit-branch. It is OK to have additional projects and repositories, but include a link to them in the Submission report.
 Pay extra attention to including a link to your Assignment Report.
+
+## Learning Outcomes
+
+By completing this assignment, you will:
+- Understand how to collect real-time data using MQTT.
+- Learn how to store and manage IoT data efficiently.
+- Gain hands-on experience with professional IoT tools.
+- Develop skills in creating dashboards and visualizing sensor data.
+
