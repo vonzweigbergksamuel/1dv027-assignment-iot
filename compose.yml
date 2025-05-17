@@ -1,0 +1,32 @@
+services:
+  influxdb: 
+    image: influxdb:latest
+    container_name: influxdb-iot
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    env_file:
+      - .env
+
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf-iot
+    depends_on:
+      - influxdb
+    env_file:
+      - .env
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana-iot
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+volumes:
+  influxdb_data:
+  grafana-storage:
